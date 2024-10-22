@@ -6,9 +6,14 @@ import 'package:task_2/pages/notification.dart';
 import 'package:task_2/pages/promo.dart';
 import 'package:task_2/pages/recommended.dart';
 import 'package:task_2/theme/theme.dart';
-import 'package:task_2/pages/search.dart'; // Ensure this import matches your file
+import 'package:task_2/pages/search.dart'; 
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -151,7 +156,7 @@ class HomePage extends StatelessWidget {
             ),
 
             Padding(
-              padding: const EdgeInsets.only(left: 16,bottom: 16,top: 16),
+              padding: const EdgeInsets.only(left: 16,bottom:16,top: 16),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children:[ Text("What's delicious around here?",
@@ -168,7 +173,6 @@ class HomePage extends StatelessWidget {
               ),
             ),
              RestaurantCardList(),
-             SizedBox(height: 10),
 
           SingleChildScrollView(
             scrollDirection: Axis.horizontal, 

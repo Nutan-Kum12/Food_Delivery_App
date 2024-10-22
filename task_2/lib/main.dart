@@ -48,7 +48,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       bottomNavigationBar: CurvedNavigationBar(
         backgroundColor: Theme.of(context).colorScheme.primary, 
-        color:  Theme.of(context).colorScheme.secondary,
+        color:  Theme.of(context).colorScheme.surface,
         animationDuration: Duration(milliseconds: 300),
         onTap: (index){
           setState(() {
@@ -58,8 +58,8 @@ class _MyHomePageState extends State<MyHomePage> {
         items:[
         Icon(Icons.home),
         Icon(Icons.favorite),
-        Icon(Icons.pages_outlined),
-        Icon(Icons.reviews_outlined),
+        Icon(Icons.shopping_cart),
+        Icon(Icons.history),
       ]),
       appBar: null,
       body: pages[pageIndex],

@@ -118,9 +118,9 @@ class _RestaurantCardState extends State<RestaurantCard> {
                   },
                   child: Icon(
                     isFav
-                        ? Icons.favorite
+                        ? Icons.favorite_rounded
                         : Icons.favorite_outline_outlined, 
-                    color: isFav ? Colors.red : Colors.white, 
+                    color: isFav ? Colors.red : const Color.fromARGB(255, 0, 0, 0), 
                   ),
                 ),
               ],
