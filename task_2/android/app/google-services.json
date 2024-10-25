@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "587566095145",
+    "project_id": "foodelivery-5ce55",
+    "storage_bucket": "foodelivery-5ce55.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:587566095145:android:569b94938a6bd821a2f538",
+        "android_client_info": {
+          "package_name": "com.example.task_2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0hr9UXqcIDfKdXhqxTtictBrKxtu_-zc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
