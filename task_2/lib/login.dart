@@ -18,37 +18,47 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController passController = TextEditingController();
   final _formKey = GlobalKey<FormState>(); // Form key to track form state
 
-  bool _isPasswordVisible = false; 
+  bool _isPasswordVisible = false;
 
   // Updated login function with Firebase authentication
   Future<void> login() async {
     if (_formKey.currentState!.validate()) {
       try {
         await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: emailController.text,
-          password: passController.text,
+          email: emailController.text.trim(),
+          password: passController.text.trim(),
         );
+
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Logged in successfully!")),
+          SnackBar(
+            content: Text("Logged in successfully!"),
+            backgroundColor: Colors.green,
+          ),
         );
-        
+
+        // Navigate to home page
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => MyHomePage()),
         );
       } on FirebaseAuthException catch (e) {
-        String errorMessage = 'Login failed';
+        String errorMessage = 'Login failed'; // Default error message
+
+        // Customize error messages based on the error code
         if (e.code == 'user-not-found') {
           errorMessage = 'No user found with that email.';
         } else if (e.code == 'wrong-password') {
           errorMessage = 'Incorrect password provided.';
         }
-        
+
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(errorMessage)),
+          SnackBar(
+            content: Text(errorMessage),
+            backgroundColor: Colors.red,
+          ),
         );
       } catch (e) {
-        print(e);
+        print("Error: $e");
       }
     }
   }
@@ -93,7 +103,16 @@ class _LoginPageState extends State<LoginPage> {
                     hintText: "Enter your email",
                     obscureText: false,
                     suffixIcon: null,
-                    validator: null,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter an email';
+                      }
+                      // Check for presence of @ only
+                      if (!value.contains('@')) {
+                        return 'Please enter a valid email';
+                      }
+                      return null; // Return null if no error
+                    },
                   ),
                   SizedBox(height: screenHeight * 0.01),
                   // Password field with toggleable visibility
@@ -101,7 +120,12 @@ class _LoginPageState extends State<LoginPage> {
                     controller: passController,
                     hintText: "Enter your password",
                     obscureText: !_isPasswordVisible,
-                    validator: null,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter a password';
+                      }
+                      return null; // Return null if no error
+                    },
                     suffixIcon: IconButton(
                       icon: Icon(
                         _isPasswordVisible
@@ -139,7 +163,7 @@ class _LoginPageState extends State<LoginPage> {
                             'Sign Up',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              fontSize: 20
+                              fontSize: 20,
                             ),
                           ),
                         )
@@ -147,7 +171,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ],
-              )
+              ),
             ],
           ),
         ),

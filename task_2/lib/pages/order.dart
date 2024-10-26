@@ -67,7 +67,9 @@ class OrderPage extends StatelessWidget {
               fit: BoxFit.cover,
             ),
           ),
-          title: Text(title),
+          title: Text(title,style: TextStyle(
+            
+          ),),
           subtitle: Row(
             children: [
                Icon(

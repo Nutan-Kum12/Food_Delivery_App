@@ -6,6 +6,7 @@ import 'package:task_2/main.dart';
 
 class RegisterPage extends StatefulWidget {
   final void Function()? onTap;
+
   const RegisterPage({super.key, required this.onTap});
 
   @override
@@ -13,6 +14,7 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  final TextEditingController nameController = TextEditingController(); // Controller for Name
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passController = TextEditingController();
   final TextEditingController confirmpassController = TextEditingController();
@@ -20,7 +22,8 @@ class _RegisterPageState extends State<RegisterPage> {
 
   Future<void> registerUser() async {
     // Checking input conditions for a valid registration
-    if (emailController.text.isNotEmpty &&
+    if (nameController.text.isNotEmpty &&
+        emailController.text.isNotEmpty &&
         passController.text.isNotEmpty &&
         passController.text == confirmpassController.text) {
       try {
@@ -30,23 +33,36 @@ class _RegisterPageState extends State<RegisterPage> {
           password: passController.text,
         );
 
+        // Optionally, store the user's name in Firestore or Realtime Database here
+        
+        await userCredential.user?.updateProfile(displayName: nameController.text);
+        await userCredential.user?.reload(); // Reload the user to get the updated info
+        User? user = FirebaseAuth.instance.currentUser; // Get the updated user
+
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text
-          ("Registered Successfully")
-          )  
+          SnackBar(
+            content: Text("Registered Successfully"),
+            backgroundColor: Colors.green,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
+            ),
+            behavior: SnackBarBehavior.floating,
+          ),
         );
-         Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => MyHomePage()),
-      );
+
+        // Navigate to home page
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => MyHomePage()),
+        );
       } on FirebaseAuthException catch (e) {
         if (e.code == 'weak-password') {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("The password provided is too weak.")),
+            SnackBar(content: Text("The password provided is too weak.")),
           );
         } else if (e.code == 'email-already-in-use') {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("The account already exists for that email.")),
+            SnackBar(content: Text("The account already exists for that email.")),
           );
         }
       } catch (e) {
@@ -79,6 +95,18 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
             ),
             SizedBox(height: screenHeight * 0.02),
+            MyTextField(
+              controller: nameController, // Assign controller for name
+              hintText: "Name",
+              obscureText: false,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter your name';
+                }
+                return null;
+              },
+              suffixIcon: null,
+            ),
             MyTextField(
               controller: emailController,
               hintText: "Email",
@@ -150,13 +178,12 @@ class _RegisterPageState extends State<RegisterPage> {
                     onTap: widget.onTap,
                     child: Text(
                       'Login Now',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 18),
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                     ),
                   ),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),
