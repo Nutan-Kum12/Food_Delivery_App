@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart'; // Import Firebase Auth
 import 'package:task_2/login.dart';
+import 'package:task_2/pages/account.dart';
 import 'package:task_2/pages/order.dart';
+import 'package:task_2/pages/orderhistory.dart';
 
 class MyDrawer extends StatelessWidget {
   MyDrawer({super.key});
@@ -71,7 +73,7 @@ class MyDrawer extends StatelessWidget {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => OrderPage()),
+                      MaterialPageRoute(builder: (context) => OrderHistoryScreen()),
                     );
                   },
                   trailing: Icon(Icons.arrow_forward_ios),
@@ -79,12 +81,17 @@ class MyDrawer extends StatelessWidget {
                 ListTile(
                   leading: Icon(Icons.add_moderator_sharp),
                   title: Text(
-                    'My Address',
+                    'My Account',
                     style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w600),
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(context,
+                     MaterialPageRoute(builder: (context) => MyAccountScreen()),
+                         );
+
+                  },
                   trailing: Icon(Icons.arrow_forward_ios),
                 ),
                 ListTile(
@@ -100,7 +107,7 @@ class MyDrawer extends StatelessWidget {
                 ),
               ],
             ),
-            Spacer(), // Pushes the sign-out button to the bottom
+            // Spacer(), // Pushes the sign-out button to the bottom
             ListTile(
               leading: Icon(Icons.logout),
               title: Text(
@@ -110,7 +117,7 @@ class MyDrawer extends StatelessWidget {
                     fontWeight: FontWeight.w600),
               ),
               onTap: () async {
-                await FirebaseAuth.instance.signOut(); // Sign out from Firebase
+                await FirebaseAuth.instance.signOut(); 
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => LoginPage(onTap: () {})), // Navigate to sign-in page

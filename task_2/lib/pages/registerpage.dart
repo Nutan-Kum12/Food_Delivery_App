@@ -14,11 +14,11 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  final TextEditingController nameController = TextEditingController(); // Controller for Name
+  final TextEditingController nameController = TextEditingController(); 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passController = TextEditingController();
   final TextEditingController confirmpassController = TextEditingController();
-  bool _isPasswordVisible = false; // State for password visibility
+  bool _isPasswordVisible = false; 
 
   Future<void> registerUser() async {
     // Checking input conditions for a valid registration
@@ -32,12 +32,8 @@ class _RegisterPageState extends State<RegisterPage> {
           email: emailController.text,
           password: passController.text,
         );
-
-        // Optionally, store the user's name in Firestore or Realtime Database here
         
         await userCredential.user?.updateProfile(displayName: nameController.text);
-        await userCredential.user?.reload(); // Reload the user to get the updated info
-        User? user = FirebaseAuth.instance.currentUser; // Get the updated user
 
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(

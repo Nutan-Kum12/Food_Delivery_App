@@ -20,7 +20,6 @@ class _LoginPageState extends State<LoginPage> {
 
   bool _isPasswordVisible = false;
 
-  // Updated login function with Firebase authentication
   Future<void> login() async {
     if (_formKey.currentState!.validate()) {
       try {
@@ -36,15 +35,13 @@ class _LoginPageState extends State<LoginPage> {
           ),
         );
 
-        // Navigate to home page
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => MyHomePage()),
         );
       } on FirebaseAuthException catch (e) {
-        String errorMessage = 'Login failed'; // Default error message
+        String errorMessage = 'Login failed'; 
 
-        // Customize error messages based on the error code
         if (e.code == 'user-not-found') {
           errorMessage = 'No user found with that email.';
         } else if (e.code == 'wrong-password') {
@@ -71,7 +68,7 @@ class _LoginPageState extends State<LoginPage> {
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: SingleChildScrollView(
         child: Form(
-          key: _formKey, // Assign the form key
+          key: _formKey, 
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [

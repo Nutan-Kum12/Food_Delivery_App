@@ -7,7 +7,7 @@ class OrderPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor:Theme.of(context).colorScheme.surface,
-      appBar: AppBar(title:  Text("Orders History"),
+      appBar: AppBar(title:  Text("Orders"),
       backgroundColor: Theme.of(context).colorScheme.secondary,),
       body: ListView(
         padding:  EdgeInsets.all(8.0),
